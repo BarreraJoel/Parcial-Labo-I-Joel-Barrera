@@ -17,6 +17,12 @@
 #define LIBRE 0
 #define OCUPADO 1
 #define MAX_CALLE 25
+#define MAX_DESCRIPCION 20
+
+typedef struct{
+	int tipoVivienda;
+	char descripcion[MAX_DESCRIPCION];
+}tipoVivienda;
 
 typedef struct{
 	int idVivienda;
@@ -51,7 +57,7 @@ int eVivienda_getIndiceEspacioLibre(eVivienda* aViviendas, int limite);
  *
  * @param aViviendas Puntero a un array de viviendas
  * @param limite Largo del array
- * @param idBuscado ID a buscar
+ * @param idBuscado ID ingresado
  * @return Retorna -1 [Puntero NULL - Largo no valido - ID no encontrado] - Indice [OK]
  */
 int eVivienda_getIndicePorId(eVivienda* aViviendas, int limite, int idBuscado);
@@ -81,12 +87,12 @@ int eVivienda_modificarUno(eVivienda* pVivienda, int opcionModificar);
  *
  * @param aViviendas Puntero a un array de viviendas
  * @param limiteViviendas Largo del array de viviendas
- * @param aCensistas Puntero a un array de censistas
- * @param limiteCensistas Largo del array de censistas
+ * @param aTipos Puntero a un array de tipos de viviendas
+ * @param limiteTipos Largo del array de tipos de viviendas
  * @param contAltas Contador de altas que determina el maximo de ID
- * @return Retorna -1 [Puntero NULL - Largo no valido - Modificacion no completada] - 0 [OK]
+ * @return Retorna -1 [Punteros NULL - Largos no validos - Modificacion no completada] - 0 [OK]
  */
-int eVivienda_modificar(eVivienda* aViviendas, int limiteViviendas, eCensista* aCensistas, int limiteCensistas, int contAltas);
+int eVivienda_modificar(eVivienda* aViviendas, int limiteViviendas, tipoVivienda* aTipos, int limiteTipos, int contAltas);
 
 //BAJA
 /**
@@ -94,17 +100,22 @@ int eVivienda_modificar(eVivienda* aViviendas, int limiteViviendas, eCensista* a
  *
  * @param aViviendas Puntero a un array de viviendas
  * @param limiteViviendas Largo del array de viviendas
- * @param aCensistas Puntero a un array de censistas
- * @param limiteCensistas Largo del array de censistas
+ * @param aTipos Puntero a un array de tipos de viviendas
+ * @param limiteTipos Largo del array de tipos de viviendas
  * @param contAltas Contador de altas que determina el maximo de ID
- * @return Retorna -1 [Puntero NULL - Largo no valido - Baja no completada] - 0 [OK]
+ * @return Retorna -1 [Punteros NULL - Largos no validos - Baja no completada] - 0 [OK]
  */
-int eVivienda_baja(eVivienda* aViviendas, int limiteViviendas, eCensista* aCensistas, int limiteCensistas, int contAltas);
+int eVivienda_baja(eVivienda* aViviendas, int limiteViviendas, tipoVivienda* aTipos, int limiteTipos, int contAltas);
 
 //ORDENAR
-int eVivienda_ordenarPorCalle(eVivienda* aVivienda, int limite);
-int eVivienda_ordenarPorCantPersonas(eVivienda* aVivienda, int limite);
-int eVivienda_ordenador(eVivienda* aVivienda, int limite);
+/**
+ * @brief Ordena el array en base al nombre y la cantidad de personas
+ *
+ * @param aViviendas Puntero a un array de viviendas
+ * @param limite Largo del array de viviendas
+ * @return Retorna -1 [Puntero NULL - Largo no valido] - 0 [OK]
+ */
+int eVivienda_ordenador(eVivienda* aViviendas, int limite);
 
 //LISTAR
 /**
@@ -112,23 +123,23 @@ int eVivienda_ordenador(eVivienda* aVivienda, int limite);
  *
  * @param aViviendas Puntero a un array de viviendas
  * @param limiteViviendas Largo del array de viviendas
- * @param aCensistas Puntero a un array de censistas
- * @param limiteCensistas Largo del array de censistas
+ * @param aTipos Puntero a un array de tipos de viviendas
+ * @param limiteTipos Largo del array de tipos de viviendas
  * @param idBuscado ID de la vivienda
  * @return Retorna -1 [Punteros NULL - Largos no validos - ID no valido] - 0 [OK]
  */
-int eVivienda_listarUno(eVivienda* aViviendas, int limiteViviendas, eCensista* aCensistas, int limiteCensistas, int idBuscado);
+int eVivienda_listarUno(eVivienda* aViviendas, int limiteViviendas, tipoVivienda* aTipos, int limiteTipos, int idBuscado);
 
 /**
  * @brief Lista el array de viviendas
  *
  * @param aViviendas Puntero a un array de viviendas
  * @param limiteViviendas Largo del array de viviendas
- * @param aCensistas Puntero a un array de censistas
- * @param limiteCensistas Largo del array de censistas
+ * @param aTipos Puntero a un array de tipos de viviendas
+ * @param limiteTipos Largo del array de tipos de viviendas
  * @return Retorna -1 [Punteros NULL - Largos no validos] - 0 [OK]
  */
-int eVivienda_listarTodos(eVivienda* aViviendas, int limiteViviendas, eCensista* aCensistas, int limiteCensistas);
+int eVivienda_listarTodos(eVivienda* aViviendas, int limiteViviendas, tipoVivienda* aTipos, int limiteTipos);
 
 
 #endif /* VIVIENDA_H_ */

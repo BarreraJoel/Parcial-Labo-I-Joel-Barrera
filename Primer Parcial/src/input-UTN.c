@@ -8,92 +8,97 @@
 #include "input-UTN.h"
 
 /**
- * @brief
+ * @brief Verifica que los caracteres sean numericos
  *
- * @param cadena
- * @param largo
- * @return
+ * @param cadena Puntero a un array de caracteres
+ * @param largo Largo del array
+ * @return Retorna -1 [Caracter no numerico] - 1 [OK]
  */
 static int esNumero(char* cadena, int largo);
 /**
- * @brief
+ * @brief Obtiene una cadena de caracteres
  *
- * @param cadena
- * @param largo
- * @return
+ * @param cadena Puntero a un array de caracteres
+ * @param largo Largo del array
+ * @return Retorna -1 [Puntero NULL - Largo no valido] - 1 [OK]
  */
 static int getString(char* cadena, int largo);
 /**
- * @brief
+ * @brief Obtiene y verifica si se ingresaron numeros enteros
  *
- * @param pResultado
- * @return
+ * @param pResultado Puntero a int donde se guarda el resultado
+ * @return Retorna -1 [Puntero NULL] - 1 [OK]
  */
 static int getInt(int* pResultado);
 
 /**
- * @brief
+ * @brief Verifica si lo ingresado es un numero decimal
  *
- * @param cadena
- * @return
+ * @param cadena Puntero a un array de caracteres
+ * @param largo Largo del array
+ * @return Retorna -1 [Caracter no numerico] - 1 [OK]
  */
-static int esNumeroFlotante(char* cadena);
+static int esNumeroFlotante(char* cadena, int largo);
+
 /**
- * @brief
+ * @brief Obtiene y verifica si se ingresaron numeros decimales
  *
- * @param pResultado
- * @return
+ * @param pResultado Puntero a float donde se guarda el resultado
+ * @return Retorna -1 [Puntero NULL] - 1 [OK]
  */
 static int getFloat(float* pResultado);
 
 /**
- * @brief
+ * @brief Verifica si lo ingresado son letras
  *
- * @param cadena
- * @param largo
- * @return
+ * @param cadena Puntero a un array de caracteres
+ * @param largo Largo del array
+ * @return Retorna -1 [Caracter no valido] - 1 [OK]
  */
 static int esAlfabetico(char* cadena, int largo);
+
 /**
- * @brief
+ * @brief Obtiene y verifica si se ingresaron caracteres alfabeticos
  *
- * @param cadena
- * @param largo
- * @return
+ * @param cadena Puntero a un array de caracteres
+ * @param largo Largo del array
+ * @return Retorna -1 [Puntero NULL - Largo no valido] - 1 [OK]
  */
 static int getNombre(char* cadena, int largo);
 
 /**
- * @brief
+ * @brief Verifica si lo ingresado es alfanumerico
  *
- * @param cadena
- * @param largo
- * @return
+ * @param cadena Puntero a un array de caracteres
+ * @param largo Largo del array
+ * @return Retorna -1 [Caracter no alfanumerico] - 1 [OK]
  */
 static int esAlfanumerico(char* cadena, int largo);
+
 /**
- * @brief
+ * @brief Obtiene y verifica si se ingreso una calle
  *
- * @param cadena
- * @param largo
- * @return
+ * @param cadena Puntero a un array de caracteres
+ * @param largo Largo del array
+ * @return Retorna -1 [Puntero NULL - Largo no valido] - 1 [OK]
  */
 static int getCalle(char* cadena, int largo);
 
 /**
- * @brief
+ * @brief Verifica si lo ingresado son numeros
  *
- * @param cadena
- * @param largo
- * @return
+ * @param cadena Puntero a un array de caracteres
+ * @param largo Largo del array
+ * @return Retorna -1 [Caracteres no numericos] - 1 [OK]
  */
 static int esTelefono(char* cadena, int largo);
+
 /**
- * @brief
+ * @brief Obtiene y verifica si se ingreso un telefono
  *
- * @param cadena
- * @param largo
- * @return
+ * @param cadena Puntero a un array de caracteres
+ * @param largo Largo del array
+ * @return Retorna -1 [Puntero NULL - Largo no valido] - 1 [OK]
  */
 static int getTelefono(char* cadena, int largo);
 
@@ -176,12 +181,12 @@ int utn_getNumeroEntero(int* pResultado, char* mensaje, char* mensajeError, int 
 	return retorno;
 }
 
-static int esNumeroFlotante(char* cadena)
+static int esNumeroFlotante(char* cadena, int largo)
 {
 	int retorno = 1;
 	int i = 0;
 
-	if(cadena != NULL && strlen(cadena) > 0)
+	if(cadena != NULL && largo > 0)
 	{
 		while((*(cadena+i)) != '\0')
 		{
@@ -203,7 +208,7 @@ static int getFloat(float* pResultado)
 
 	if(pResultado != NULL)
 	{
-		if(getString(buffer,sizeof(buffer)) == 1 && esNumeroFlotante(buffer) == 1)
+		if(getString(buffer,sizeof(buffer)) == 1 && esNumeroFlotante(buffer,sizeof(buffer)) == 1)
 		{
 			*pResultado = atof(buffer);
 			retorno = 1;

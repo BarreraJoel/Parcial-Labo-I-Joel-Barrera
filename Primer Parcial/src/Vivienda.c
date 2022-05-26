@@ -8,7 +8,7 @@
 #include "Vivienda.h"
 
 /**
- * @brief Incrementa el ID de una vivienda en 1
+ * @brief Incrementa el ID de una vivienda de a uno
  *
  * @return Retorna el ID incrementado
  */
@@ -19,33 +19,33 @@
 	return idIncremental++;
 }
 
-int eVivienda_listarUno(eVivienda* aViviendas, int limiteViviendas, eCensista* aCensistas, int limiteCensistas, int idBuscado)
+int eVivienda_listarUno(eVivienda* aViviendas, int limiteViviendas, tipoVivienda* aTipos, int limiteTipos, int idBuscado)
 {
 	int retorno = -1;
 	int i;
 	int j;
 
-	if(aViviendas != NULL && limiteViviendas > 0 && aCensistas != NULL && limiteCensistas > 0 && idBuscado >= 20000)
+	if(aViviendas != NULL && limiteViviendas > 0 && aTipos != NULL && limiteTipos > 0 && idBuscado >= 20000)
 	{
-		printf("\n------------------------------------------------------------------------------------\n");
-		printf("******************************** DATOS DE LA VIVIENDA ********************************");
-		printf("\n------------------------------------------------------------------------------------\n");
-		printf("ID            CALLE           CANT.PERSONAS    HABITACIONES   TIPO VIVIENDA   CENSISTA");
-		printf("\n------------------------------------------------------------------------------------\n");
+		printf("\n\n-----------------------------------------------------------------------------------------\n");
+		printf("************************************ DATOS DE LA VIVIENDA ***********************************");
+		printf("\n-------------------------------------------------------------------------------------------\n");
+		printf("ID            CALLE           CANT.PERSONAS    HABITACIONES   TIPO VIVIENDA   LEGAJO CENSISTA");
+		printf("\n-------------------------------------------------------------------------------------------\n");
 		for(i = 0; i < limiteViviendas; i++)
 		{
-			for(j = 0; j < limiteCensistas; j++)
+			for(j = 0; j < limiteTipos; j++)
 			{
 				if((*(aViviendas+i)).isEmpty == OCUPADO && (*(aViviendas+i)).idVivienda == idBuscado)
 				{
-					if((*(aViviendas+i)).legajoCensista == (*(aCensistas+j)).legajoCensista)
+					if((*(aViviendas+i)).tipoVivienda == (*(aTipos+j)).tipoVivienda)
 					{
 						printf("%-9d"
 								"%-10s"
 								"%10d"
 								"%15d"
 								"%15d"
-								"%15s\n",(*(aViviendas+i)).idVivienda,(*(aViviendas+i)).calle,(*(aViviendas+i)).cantidadPersonas,(*(aViviendas+i)).cantidadHabitaciones,(*(aViviendas+i)).tipoVivienda,(*(aCensistas+j)).nombre);
+								"%15d\n",(*(aViviendas+i)).idVivienda,(*(aViviendas+i)).calle,(*(aViviendas+i)).cantidadPersonas,(*(aViviendas+i)).cantidadHabitaciones,(*(aViviendas+i)).tipoVivienda,(*(aViviendas+i)).legajoCensista);
 						retorno = 0;
 						break;
 					}
@@ -56,33 +56,33 @@ int eVivienda_listarUno(eVivienda* aViviendas, int limiteViviendas, eCensista* a
 	return retorno;
 }
 
-int eVivienda_listarTodos(eVivienda* aViviendas, int limiteViviendas, eCensista* aCensistas, int limiteCensistas)
+int eVivienda_listarTodos(eVivienda* aViviendas, int limiteViviendas, tipoVivienda* aTipos, int limiteTipos)
 {
 	int retorno = -1;
 	int i;
 	int j;
 
-	if(aViviendas != NULL && limiteViviendas > 0 && aCensistas != NULL && limiteCensistas > 0)
+	if(aViviendas != NULL && limiteViviendas > 0 && aTipos != NULL && limiteTipos > 0)
 	{
-		printf("\n------------------------------------------------------------------------------------\n");
-		printf("******************************* LISTADO DE VIVIENDAS *********************************");
-		printf("\n------------------------------------------------------------------------------------\n");
-		printf("ID            CALLE           CANT.PERSONAS    HABITACIONES   TIPO VIVIENDA   CENSISTA");
-		printf("\n------------------------------------------------------------------------------------\n");
+		printf("\n\n------------------------------------------------------------------------------------------\n");
+		printf("*********************************** LISTADO DE VIVIENDAS *************************************");
+		printf("\n--------------------------------------------------------------------------------------------\n");
+		printf("ID            CALLE           CANT.PERSONAS    HABITACIONES   TIPO VIVIENDA   LEGAJO CENSISTA");
+		printf("\n--------------------------------------------------------------------------------------------\n");
 		for(i = 0; i < limiteViviendas; i++)
 		{
-			for(j = 0; j < limiteCensistas; j++)
+			for(j = 0; j < limiteTipos; j++)
 			{
 				if((*(aViviendas+i)).isEmpty == OCUPADO)
 				{
-					if((*(aViviendas+i)).legajoCensista == (*(aCensistas+j)).legajoCensista)
+					if((*(aViviendas+i)).tipoVivienda == (*(aTipos+j)).tipoVivienda)
 					{
 						printf("%-9d"
 								"%-10s"
 								"%10d"
 								"%15d"
-								"%15d"
-								"%15s\n",(*(aViviendas+i)).idVivienda,(*(aViviendas+i)).calle,(*(aViviendas+i)).cantidadPersonas,(*(aViviendas+i)).cantidadHabitaciones,(*(aViviendas+i)).tipoVivienda,(*(aCensistas+j)).nombre);
+								"%15s"
+								"%15d\n",(*(aViviendas+i)).idVivienda,(*(aViviendas+i)).calle,(*(aViviendas+i)).cantidadPersonas,(*(aViviendas+i)).cantidadHabitaciones,(*(aTipos+j)).descripcion,(*(aViviendas+i)).legajoCensista);
 					}
 				}
 			}
@@ -185,32 +185,37 @@ int eVivienda_alta(eVivienda* aViviendas, int limiteViviendas)
 int eVivienda_modificarUno(eVivienda* pVivienda, int opcionModificar)
 {
 	int retorno = -1;
+	eVivienda auxiliar;
 
 	if(pVivienda != NULL && opcionModificar > 0)
 	{
 		switch(opcionModificar)
 		{
 			case 1:
-				if(utn_getCalle(pVivienda->calle, "\nIngrese la calle: ","\nLa calle ingresada no es valida\n",4,25,3) == 1)
+				if(utn_getCalle(auxiliar.calle,"\nIngrese la calle: ","\nLa calle ingresada no es valida\n",4,MAX_CALLE,3) == 1)
 				{
+					strcpy(pVivienda->calle,auxiliar.calle);
 					retorno = 0;
 				}
 				break;
 			case 2:
-				if(utn_getNumeroEntero(&pVivienda->cantidadPersonas,"\nIngrese la cantidad de personas del hogar: ","\nLa cantidad ingresada no es valida\n",1,10,3) == 1)
+				if(utn_getNumeroEntero(&auxiliar.cantidadPersonas,"\nIngrese la cantidad de personas del hogar: ","\nLa cantidad ingresada no es valida\n",1,10,3) == 1)
 				{
+					pVivienda->cantidadPersonas = auxiliar.cantidadPersonas;
 					retorno = 0;
 				}
 				break;
 			case 3:
-				if(utn_getNumeroEntero(&pVivienda->cantidadHabitaciones,"\nIngrese la cantidad de habitaciones del hogar: ","\nLa cantidad ingresada no es valida\n",1,5,3) == 1)
+				if(utn_getNumeroEntero(&auxiliar.cantidadHabitaciones,"\nIngrese la cantidad de habitaciones del hogar: ","\nLa cantidad ingresada no es valida\n",1,5,3) == 1)
 				{
+					pVivienda->cantidadHabitaciones = auxiliar.cantidadHabitaciones;
 					retorno = 0;
 				}
 				break;
 			case 4:
-				if(utn_getNumeroEntero(&pVivienda->tipoVivienda,"\nTIPO DE VIVIENDA\n1.CASA\n2.DEPARTAMENTO\n3.CASILLA\n4.RANCHO\nIngrese una opcion: ","\nLa opcion ingresada no es valida\n",1,4,3) == 1)
+				if(utn_getNumeroEntero(&auxiliar.tipoVivienda,"\nTIPO DE VIVIENDA\n1.CASA\n2.DEPARTAMENTO\n3.CASILLA\n4.RANCHO\nIngrese una opcion: ","\nLa opcion ingresada no es valida\n",1,4,3) == 1)
 				{
+					pVivienda->tipoVivienda = auxiliar.tipoVivienda;
 					retorno = 0;
 				}
 				break;
@@ -223,24 +228,24 @@ int eVivienda_modificarUno(eVivienda* pVivienda, int opcionModificar)
 	return retorno;
 }
 
-int eVivienda_modificar(eVivienda* aViviendas, int limiteViviendas, eCensista* aCensistas, int limiteCensistas, int contAltas)
+int eVivienda_modificar(eVivienda* aViviendas, int limiteViviendas, tipoVivienda* aTipos, int limiteTipos, int contAltas)
 {
 	int retorno = -1;
 	int idIngresado;
 	int opcionModificacion;
 	int indiceId;
 
-	if(aViviendas != NULL && limiteViviendas > 0 && aCensistas != NULL && limiteCensistas > 0 && contAltas > 0)
+	if(aViviendas != NULL && limiteViviendas > 0 && aTipos != NULL && limiteTipos > 0 && contAltas > 0)
 	{
-		eVivienda_listarTodos(aViviendas, limiteViviendas, aCensistas, limiteCensistas);
-		if(utn_getNumeroEntero(&idIngresado,"\nIngrese el ID de la vivienda a modificar: ","\nEl ID ingresado no es valido\n",20000,20000+contAltas,3) == 1)
+		eVivienda_listarTodos(aViviendas, limiteViviendas, aTipos, limiteTipos);
+		if(utn_getNumeroEntero(&idIngresado,"\nIngrese el ID de la vivienda a modificar: ","\nEl ID ingresado no es valido\n",20000,19999+contAltas,3) == 1)
 		{
 			indiceId = eVivienda_getIndicePorId(aViviendas,limiteViviendas,idIngresado);
 			if(indiceId >= 0)
 			{
 				do
 				{
-					eVivienda_listarUno(aViviendas, limiteViviendas, aCensistas, limiteCensistas, idIngresado);
+					eVivienda_listarUno(aViviendas, limiteViviendas, aTipos, limiteTipos, idIngresado);
 					if(utn_getNumeroEntero(&opcionModificacion, "\nMENU DE MODIFICACION"
 																"\n1.MODIFICAR CALLE"
 																"\n2.MODIFICAR CANTIDAD DE PERSONAS"
@@ -262,7 +267,7 @@ int eVivienda_modificar(eVivienda* aViviendas, int limiteViviendas, eCensista* a
 	return retorno;
 }
 
-int eVivienda_baja(eVivienda* aViviendas, int limiteViviendas, eCensista* aCensistas, int limiteCensistas, int contAltas)
+int eVivienda_baja(eVivienda* aViviendas, int limiteViviendas, tipoVivienda* aTipos, int limiteTipos, int contAltas)
 {
 	int retorno = -1;
 	int idIngresado;
@@ -270,16 +275,16 @@ int eVivienda_baja(eVivienda* aViviendas, int limiteViviendas, eCensista* aCensi
 	int confirmacion;
 
 
-	if(aViviendas != NULL && limiteViviendas > 0 && aCensistas != NULL && limiteCensistas > 0)
+	if(aViviendas != NULL && limiteViviendas > 0 && aTipos != NULL && limiteTipos > 0 && contAltas > 0)
 	{
-		eVivienda_listarTodos(aViviendas, limiteViviendas, aCensistas, limiteCensistas);
-		if(utn_getNumeroEntero(&idIngresado,"\nIngrese el numero del ID a dar de baja: ","\nEl ID ingresado no es valido\n",20000,20000+contAltas,3) == 1)
+		eVivienda_listarTodos(aViviendas, limiteViviendas, aTipos, limiteTipos);
+		if(utn_getNumeroEntero(&idIngresado,"\nIngrese el numero del ID a dar de baja: ","\nEl ID ingresado no es valido\n",20000,19999+contAltas,3) == 1)
 		{
 			indiceId = eVivienda_getIndicePorId(aViviendas,limiteViviendas,idIngresado);
 
 			if(indiceId >= 0)
 			{
-				eVivienda_listarUno(aViviendas, limiteViviendas, aCensistas, limiteCensistas, idIngresado);
+				eVivienda_listarUno(aViviendas, limiteViviendas, aTipos, limiteTipos, idIngresado);
 				if(utn_getNumeroEntero(&confirmacion,"\nEsta seguro/a que quiere dar de baja la vivienda?\n1.SI\n2.NO\nElija una opcion: ",
 													 "\nLa opcion ingresada no es valida\n",1,2,3) == 1)
 				{
@@ -319,7 +324,6 @@ int eVivienda_ordenador(eVivienda* aViviendas, int limite)
 					auxiliar = (*(aViviendas+i));
 					(*(aViviendas+i)) = (*(aViviendas+i+1));
 					(*(aViviendas+i+1)) = auxiliar;
-					retorno = 0;
 				}
 				else if(strncmp((*(aViviendas+i)).calle,(*(aViviendas+i+1)).calle,MAX_CALLE) == 0)
 				{
@@ -329,12 +333,12 @@ int eVivienda_ordenador(eVivienda* aViviendas, int limite)
 						auxiliar = (*(aViviendas+i));
 						(*(aViviendas+i)) = (*(aViviendas+i+1));
 						(*(aViviendas+i+1)) = auxiliar;
-						retorno = 0;
 					}
 				}
 			}
 			limite--;
 		}while(flagSwap == 1);
+		retorno = 0;
 	}
 	return retorno;
 }

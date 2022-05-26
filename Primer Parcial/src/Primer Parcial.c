@@ -1,6 +1,6 @@
 /*
  ============================================================================
- Name        : Primer.c
+ Name        : Primer Parcial
  Author      : 
  Version     :
  Copyright   : Your copyright notice
@@ -15,6 +15,7 @@
 #include "input-UTN.h"
 
 #define MAX_VIVIENDAS 3
+#define MAX_TIPOS 4
 #define MAX_CENSISTAS 3
 
 int main(void)
@@ -22,9 +23,11 @@ int main(void)
 	setbuf(stdout, NULL);
 
 	eVivienda listaViviendas[MAX_VIVIENDAS];
+	tipoVivienda listaTipos[MAX_TIPOS] = {{1,"CASA"},{2,"DEPARTAMENTO"},{3,"CASILLA"},{4,"RANCHO"}};
 	eCensista listaCensistas[MAX_CENSISTAS] = {{100,"Ana",34,"1203-2345"},
 											   {101,"Juan",24,"4301-5467"},
 											   {102,"Sol",47,"5902-3748"}};
+
 	char opcionMenu;
 	int contAltas = 0;
 	int flagAlta = 0;
@@ -60,7 +63,7 @@ int main(void)
 				case 'B':
 					if(flagAlta == 1 && contAltas > 0)
 					{
-						if(eVivienda_modificar(listaViviendas, MAX_VIVIENDAS, listaCensistas, MAX_CENSISTAS, contAltas) == 0)
+						if(eVivienda_modificar(listaViviendas, MAX_VIVIENDAS, listaTipos, MAX_TIPOS, contAltas) == 0)
 						{
 							printf("\n*** Las modificaciones se realizaron con exito ***\n");
 						}
@@ -73,7 +76,7 @@ int main(void)
 				case 'C':
 					if(flagAlta == 1 && contAltas > 0)
 					{
-						if(eVivienda_baja(listaViviendas, MAX_VIVIENDAS, listaCensistas, MAX_CENSISTAS, contAltas) == 0)
+						if(eVivienda_baja(listaViviendas, MAX_VIVIENDAS, listaTipos, MAX_TIPOS, contAltas) == 0)
 						{
 							printf("\n*** La baja se realizo con exito ***\n");
 							contAltas--;
@@ -88,7 +91,7 @@ int main(void)
 					if(flagAlta == 1 && contAltas > 0)
 					{
 						eVivienda_ordenador(listaViviendas, MAX_VIVIENDAS);
-						eVivienda_listarTodos(listaViviendas, MAX_VIVIENDAS, listaCensistas, MAX_CENSISTAS);
+						eVivienda_listarTodos(listaViviendas, MAX_VIVIENDAS, listaTipos, MAX_TIPOS);
 					}
 					else
 					{

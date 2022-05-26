@@ -69,7 +69,7 @@ int utn_getTexto(char* cadena, char* mensaje, char* mensajeError, int minimo, in
  *
  * @param cadena puntero al array del nombre o apellido
  * @param mensaje que se imprime para que un usuario ingrese nombre o apellido
- * @param mensajeError mensajeError mensaje que se imprime cuando un usuario ingreso algo no valido
+ * @param mensajeError mensaje que se imprime cuando un usuario ingreso algo no valido
  * @param minimo int cantidad minima de caracteres que se puede ingresar
  * @param maximo int cantidad maxima de caracteres que se puede ingresar
  * @param reintentos int cantidad de intentos que tiene el usuario
@@ -81,24 +81,24 @@ int utn_getNombre(char* cadena, char* mensaje, char* mensajeError, int minimo, i
  * @brief Recibe una calle y la valida
  *
  * @param cadena puntero al array de calle
- * @param mensaje
- * @param mensajeError
- * @param minimo
- * @param maximo
- * @param reintentos
- * @return
+ * @param mensaje que se imprime para que un usuario ingrese una calle
+ * @param mensajeError mensaje que se imprime cuando un usuario ingreso algo no valido
+ * @param minimo int cantidad minima de caracteres que se puede ingresar
+ * @param maximo int cantidad maxima de caracteres que se puede ingresar
+ * @param reintentos int cantidad de intentos que tiene el usuario
+ * @return Retorna -1 [Sin intentos] - 1 [OK]
  */
 int utn_getCalle(char* cadena, char* mensaje, char* mensajeError, int minimo, int maximo, int reintentos);
 
 /**
  * @brief Recibe un telefono y lo valida
  *
- * @param cadena
- * @param limite
- * @param mensaje
- * @param mensajeError
- * @param reintentos
- * @return
+ * @param cadena puntero al array de calle
+ * @param limite Largo del array
+ * @param mensaje que se imprime para que un usuario ingrese una calle
+ * @param mensajeError mensaje que se imprime cuando un usuario ingreso algo no valido
+ * @param reintentos cantidad de intentos que tiene el usuario
+ * @return Retorna -1 [Sin intentos] - 1 [OK]
  */
 int utn_getTelefono(char* cadena, int limite, char* mensaje, char* mensajeError, int reintentos);
 
